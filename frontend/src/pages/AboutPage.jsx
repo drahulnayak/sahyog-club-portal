@@ -1,5 +1,5 @@
 import React from 'react';
-import facultyPhoto1 from '../assets/zs_profile_pic.jpg'; // <-- IMPORT THE LOCAL IMAGE
+import facultyPhoto1 from '../assets/zs_profile_pic.jpg'; // Make sure this image is in src/assets
 
 const AboutPage = () => {
   return (
@@ -24,7 +24,7 @@ const AboutPage = () => {
           <h2>Our Guiding Pillars</h2>
           <div className="faculty-grid">
             <div className="faculty-card">
-              <img src={facultyPhoto1} alt="Faculty In-charge 1" /> {/* <-- USE THE IMPORTED IMAGE */}
+              <img src={facultyPhoto1} alt="Faculty In-charge 1" />
               <h3>[Faculty Name 1]</h3>
               <p className="faculty-designation">[Designation, Department]</p>
               <blockquote>

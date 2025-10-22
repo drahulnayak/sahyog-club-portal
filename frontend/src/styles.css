@@ -15,8 +15,9 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('https://clickclub.nitrr.ac.in/media/campus/choose-us-image-03.png');
-  background-size: cover;
+  background-image: url('/background.png');
+  background-size: contain; 
+  background-color: var(--dark-blue); 
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -75,20 +76,42 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .like-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
 .like-btn svg { stroke: #555; transition: all 0.2s ease; }
 .like-btn.liked svg { fill: #e74c3c; stroke: #e74c3c; }
+.footer { background-color: var(--dark-blue); color: #bdc3c7; padding: 1rem 0; text-align: center; width: 100%; }
+.footer-content { display: flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
+.footer-link { color: white; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+.footer-link:hover { color: var(--primary-blue); text-decoration: underline; }
+.footer-icon-link svg { stroke: #bdc3c7; width: 18px; height: 18px; vertical-align: middle; margin-left: 0.25rem; transition: stroke 0.3s ease; }
+.footer-icon-link:hover svg { stroke: var(--primary-blue); }
 
-/* --- ABOUT US PAGE STYLES --- */
-.about-page-container .container.about-container { margin-top: 0; }
-.about-hero { height: 40vh; background-image: linear-gradient(rgba(28, 146, 210, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto-format&fit=crop'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
-.about-hero-content h1 { font-size: 2rem; }
+
+/* --- RESTORED ABOUT US PAGE STYLES --- */
+.about-page-container .container.about-container { 
+  margin-top: 0; 
+  padding-top: 0; /* Remove padding if hero takes full width */
+}
+.about-hero { 
+  height: 40vh; 
+  background-image: linear-gradient(rgba(28, 146, 210, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop'); 
+  background-size: cover; 
+  background-position: center; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center; 
+  color: white; 
+}
+.about-hero-content h1 { font-size: 2rem; margin: 0; font-weight: 700; }
+.about-hero-content p { font-size: 1rem; margin-top: 0.5rem; opacity: 0.9; }
 .about-section { padding: 2rem 0; text-align: left; line-height: 1.8; }
-.about-section h2 { font-size: 1.5rem; }
+.about-section h2 { text-align: center; font-size: 1.75rem; margin-bottom: 2rem; color: #2c3e50; }
 .activities-section { background-color: #f8f9fa; border-radius: 16px; padding: 2rem; }
 .about-activities-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 .activity-card { padding: 1.5rem; border: 1px solid #e0e0e0; border-radius: 12px; transition: box-shadow 0.3s, transform 0.3s; }
 .activity-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 .activity-card h3 { color: #1c92d2; margin-top: 0; }
 .motto-section { text-align: center; }
-.motto-section blockquote { font-size: 1.25rem; }
+.motto-section blockquote { font-size: 1.25rem; font-style: italic; color: #333; border-left: 5px solid var(--primary-blue); padding-left: 1.5rem; margin: 2rem 0; display: inline-block; }
+.motto-section footer { font-size: 1rem; color: #777; margin-top: 0.5rem; }
 .faculty-section { background-color: #e9ecef; border-radius: 16px; padding: 2.5rem 1.5rem; margin-top: 2rem; }
 .faculty-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 2rem; }
 .faculty-card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; }
@@ -98,6 +121,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 .faculty-card .faculty-designation { color: #6c757d; font-size: 1rem; margin: 0.25rem 0 1rem 0; }
 .faculty-card blockquote { font-style: italic; color: #555; border-left: 3px solid #dee2e6; padding-left: 1rem; margin: 0; text-align: left; }
 
+
+/* --- TABLET & DESKTOP STYLES --- */
 @media (min-width: 768px) {
   main.page-container { padding: 1rem 1.5rem; }
   .container { margin: 2rem auto; padding: 2.5rem; }
@@ -112,44 +137,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .faculty-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* --- LARGE DESKTOP STYLES --- */
 @media (min-width: 1200px) {
   .container { max-width: 1200px; }
   .about-page-container .container.about-container { max-width: 900px; }
-}
-
-/* --- UPDATED FOOTER STYLES --- */
-.footer {
-  background-color: var(--dark-blue);
-  color: #bdc3c7;
-  padding: 1rem 0;
-  text-align: center;
-  width: 100%;
-}
-.footer-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
-.footer-link {
-  color: white; /* Make the name stand out */
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-.footer-link:hover {
-  color: var(--primary-blue); /* Blue on hover */
-  text-decoration: underline;
-}
-.footer-icon-link svg {
-  stroke: #bdc3c7;
-  width: 18px;
-  height: 18px;
-  vertical-align: middle; /* Align icon with text */
-  margin-left: 0.25rem;
-  transition: stroke 0.3s ease;
-}
-.footer-icon-link:hover svg {
-  stroke: var(--primary-blue); /* Blue on hover */
 }
