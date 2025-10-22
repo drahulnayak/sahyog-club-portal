@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
+import { API_BASE } from '../api.js'; // <-- IMPORT API_BASE
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:4000/api/auth/login', {
+      // Use API_BASE for the URL
+      const res = await fetch(`${API_BASE}/api/auth/login`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -19,14 +21,20 @@ const LoginPage = () => {
 
       const data = await res.json();
       if (res.ok) {
-        login(data.token);
-        navigate('/');
+        // Pass both token and user object to login function
+        login(data.token, data.user); 
+        navigate('/'); // Redirect to home page on success
       } else {
-        alert(data.message);
+        alert(data.message); // Show error message from backend
       }
     } catch (error) {
       console.error('Login failed:', error);
-      alert('An error occurred during login.');
+      // More specific error for network issues
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        alert('Failed to connect to the server. Please check your connection or try again later.');
+      } else {
+        alert('An error occurred during login.');
+      }
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from '../api.js'; // <-- IMPORT API_BASE
 
 const SignupPage = () => {
   const [name, setName] = useState('');
@@ -10,7 +11,8 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:4000/api/auth/register', {
+       // Use API_BASE for the URL
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
@@ -19,13 +21,18 @@ const SignupPage = () => {
       const data = await res.json();
       if (res.ok) {
         alert(data.message);
-        navigate('/login');
+        navigate('/login'); // Redirect to login page on success
       } else {
-        alert(data.message);
+        alert(data.message); // Show error message from backend
       }
     } catch (error) {
       console.error('Signup failed:', error);
-      alert('An error occurred during signup.');
+       // More specific error for network issues
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+         alert('Failed to connect to the server. Please check your connection or try again later.');
+      } else {
+        alert('An error occurred during signup.');
+      }
     }
   };
 
