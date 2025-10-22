@@ -1,0 +1,155 @@
+/* --- BLUE THEME with RESPONSIVE DESIGN --- */
+
+/* --- General & Layout Styles (Mobile First) --- */
+:root {
+  --primary-blue: #1c92d2;
+  --dark-blue: #2c3e50;
+  --text-dark: #333;
+}
+
+body, html, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('https://clickclub.nitrr.ac.in/media/campus/choose-us-image-03.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-dark);
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main.page-container {
+  flex-grow: 1;
+  padding: 0; 
+}
+
+.container {
+  width: auto;
+  margin: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* --- (All other existing styles are unchanged) --- */
+button { margin: 10px; padding: 12px 24px; border: none; border-radius: 8px; background-color: var(--primary-blue); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; }
+button:hover { background-color: #1377ad; }
+.options { display: flex; flex-wrap: wrap; justify-content: center; }
+form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; text-align: left; }
+label { font-weight: 600; margin-bottom: -10px; }
+input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(28, 146, 210, 0.2); }
+.navbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; background-color: var(--dark-blue); padding: 0.5rem 1rem; color: white; min-height: 65px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.navbar-brand { color: white; text-decoration: none; font-size: 1rem; font-weight: bold; display: flex; align-items: center; gap: 0.5rem; }
+.navbar-links { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.navbar-link { color: white; text-decoration: none; font-size: 0.9rem; }
+.navbar-link:hover { text-decoration: underline; }
+.navbar-user { color: #ecf0f1; }
+.navbar-button { background-color: #e74c3c; box-shadow: none; padding: 0.4rem 0.8rem; }
+.navbar-button:hover { background-color: #c0392b; }
+.navbar-icon { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+.navbar-icon-right { height: 55px; width: auto; max-width: 220px; object-fit: contain; background-color: transparent; padding: 0; border-radius: 0; border: none; }
+.user-count-container { display: flex; align-items: center; gap: 0.5rem; }
+.count-button { background-color: #3498db; font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+.count-button:hover { background-color: #2980b9; }
+.user-count-display { color: white; font-weight: 500; font-size: 0.8rem; }
+.events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left; }
+.event-card-grid { background: white; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; }
+.event-card-grid:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+.event-image-grid { width: 100%; height: 200px; object-fit: cover; }
+.event-content-grid { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+.event-content-grid h2 { font-size: 1.2rem; }
+.like-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
+.like-btn svg { stroke: #555; transition: all 0.2s ease; }
+.like-btn.liked svg { fill: #e74c3c; stroke: #e74c3c; }
+
+/* --- ABOUT US PAGE STYLES --- */
+.about-page-container .container.about-container { margin-top: 0; }
+.about-hero { height: 40vh; background-image: linear-gradient(rgba(28, 146, 210, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto-format&fit=crop'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+.about-hero-content h1 { font-size: 2rem; }
+.about-section { padding: 2rem 0; text-align: left; line-height: 1.8; }
+.about-section h2 { font-size: 1.5rem; }
+.activities-section { background-color: #f8f9fa; border-radius: 16px; padding: 2rem; }
+.about-activities-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.activity-card { padding: 1.5rem; border: 1px solid #e0e0e0; border-radius: 12px; transition: box-shadow 0.3s, transform 0.3s; }
+.activity-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.activity-card h3 { color: #1c92d2; margin-top: 0; }
+.motto-section { text-align: center; }
+.motto-section blockquote { font-size: 1.25rem; }
+.faculty-section { background-color: #e9ecef; border-radius: 16px; padding: 2.5rem 1.5rem; margin-top: 2rem; }
+.faculty-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 2rem; }
+.faculty-card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; }
+.faculty-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
+.faculty-card img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 5px solid var(--primary-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.faculty-card h3 { margin: 0; font-size: 1.5rem; color: #2c3e50; }
+.faculty-card .faculty-designation { color: #6c757d; font-size: 1rem; margin: 0.25rem 0 1rem 0; }
+.faculty-card blockquote { font-style: italic; color: #555; border-left: 3px solid #dee2e6; padding-left: 1rem; margin: 0; text-align: left; }
+
+@media (min-width: 768px) {
+  main.page-container { padding: 1rem 1.5rem; }
+  .container { margin: 2rem auto; padding: 2.5rem; }
+  .navbar { padding: 0 2rem; flex-wrap: nowrap; }
+  .navbar-brand { font-size: 1.3rem; }
+  .navbar-links { gap: 1.5rem; }
+  .navbar-link { font-size: 1rem; }
+  .about-hero-content h1 { font-size: 3rem; }
+  .about-hero-content p { font-size: 1.25rem; }
+  .about-section h2 { font-size: 2rem; }
+  .about-activities-grid { grid-template-columns: repeat(3, 1fr); }
+  .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .container { max-width: 1200px; }
+  .about-page-container .container.about-container { max-width: 900px; }
+}
+
+/* --- UPDATED FOOTER STYLES --- */
+.footer {
+  background-color: var(--dark-blue);
+  color: #bdc3c7;
+  padding: 1rem 0;
+  text-align: center;
+  width: 100%;
+}
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.footer-link {
+  color: white; /* Make the name stand out */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.footer-link:hover {
+  color: var(--primary-blue); /* Blue on hover */
+  text-decoration: underline;
+}
+.footer-icon-link svg {
+  stroke: #bdc3c7;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle; /* Align icon with text */
+  margin-left: 0.25rem;
+  transition: stroke 0.3s ease;
+}
+.footer-icon-link:hover svg {
+  stroke: var(--primary-blue); /* Blue on hover */
+}

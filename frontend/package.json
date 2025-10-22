@@ -1,0 +1,1 @@
+{"name":"college-pyq-frontend","version":"1.0.0","scripts":{"dev":"vite","build":"vite build","start":"vite preview"},"dependencies":{"jwt-decode":"^4.0.0","multer":"^2.0.2","react":"^18.2.0","react-dom":"^18.2.0","react-router-dom":"^6.14.1"},"devDependencies":{"vite":"^5.0.0"}}
