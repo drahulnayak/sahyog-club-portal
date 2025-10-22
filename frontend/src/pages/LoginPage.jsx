@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
-import { API_BASE } from '../api.js'; // <-- IMPORT API_BASE
+import { API_BASE_URL } from '../api.js'; // <-- IMPORT API_BASE_URL
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -12,8 +12,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Use API_BASE for the URL
-      const res = await fetch(`${API_BASE}/api/auth/login`, { 
+      // Use API_BASE_URL for the URL
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
