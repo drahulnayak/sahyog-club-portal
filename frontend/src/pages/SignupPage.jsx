@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE } from '../api.js'; // <-- IMPORT API_BASE
+import { API_BASE_URL } from '../api.js'; // <-- This is CORRECT
 
 const SignupPage = () => {
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const SignupPage = () => {
     e.preventDefault();
     try {
        // Use API_BASE for the URL
-      const res = await fetch(`${API_BASE}/api/auth/register`, {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
