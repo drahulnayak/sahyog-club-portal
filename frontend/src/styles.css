@@ -7,6 +7,7 @@
   --text-dark: #333;
 }
 
+/* Ensure full height for layout */
 body, html, #root {
   height: 100%;
 }
@@ -15,130 +16,483 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/background.png');
-  background-size: contain; 
-  background-color: var(--dark-blue); 
+  /* Background image from external source */
+  background-image: url('https://clickclub.nitrr.ac.in/media/campus/choose-us-image-03.png');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; /* Note: Can sometimes cause performance issues on mobile */
   color: var(--text-dark);
 }
 
+/* Flex container for sticky footer */
 .app-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* Main content area */
 main.page-container {
-  flex-grow: 1;
-  padding: 0; 
+  flex-grow: 1; /* Allows footer to stick to bottom */
+  padding: 0; /* No padding on mobile, added via media query */
 }
 
+/* Glassmorphism container style */
 .container {
-  width: auto;
-  margin: 1rem;
+  width: auto; /* Adjusts to content, constrained by margin */
+  margin: 1rem; /* Spacing on mobile */
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
+  /* Glass effect */
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  background: rgba(255, 255, 255, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
 }
 
-/* --- (All other existing styles are unchanged) --- */
-button { margin: 10px; padding: 12px 24px; border: none; border-radius: 8px; background-color: var(--primary-blue); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; }
-button:hover { background-color: #1377ad; }
-.options { display: flex; flex-wrap: wrap; justify-content: center; }
-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; text-align: left; }
-label { font-weight: 600; margin-bottom: -10px; }
-input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(28, 146, 210, 0.2); }
-.navbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; background-color: var(--dark-blue); padding: 0.5rem 1rem; color: white; min-height: 65px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.navbar-brand { color: white; text-decoration: none; font-size: 1rem; font-weight: bold; display: flex; align-items: center; gap: 0.5rem; }
-.navbar-links { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.navbar-link { color: white; text-decoration: none; font-size: 0.9rem; }
-.navbar-link:hover { text-decoration: underline; }
-.navbar-user { color: #ecf0f1; }
-.navbar-button { background-color: #e74c3c; box-shadow: none; padding: 0.4rem 0.8rem; }
-.navbar-button:hover { background-color: #c0392b; }
-.navbar-icon { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
-.navbar-icon-right { height: 55px; width: auto; max-width: 220px; object-fit: contain; background-color: transparent; padding: 0; border-radius: 0; border: none; }
-.user-count-container { display: flex; align-items: center; gap: 0.5rem; }
-.count-button { background-color: #3498db; font-size: 0.8rem; padding: 0.4rem 0.8rem; }
-.count-button:hover { background-color: #2980b9; }
-.user-count-display { color: white; font-weight: 500; font-size: 0.8rem; }
-.events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left; }
-.event-card-grid { background: white; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; }
-.event-card-grid:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
-.event-image-grid { width: 100%; height: 200px; object-fit: cover; }
-.event-content-grid { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-.event-content-grid h2 { font-size: 1.2rem; }
-.like-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
-.like-btn svg { stroke: #555; transition: all 0.2s ease; }
-.like-btn.liked svg { fill: #e74c3c; stroke: #e74c3c; }
-.footer { background-color: var(--dark-blue); color: #bdc3c7; padding: 1rem 0; text-align: center; width: 100%; }
-.footer-content { display: flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
-.footer-link { color: white; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-.footer-link:hover { color: var(--primary-blue); text-decoration: underline; }
-.footer-icon-link svg { stroke: #bdc3c7; width: 18px; height: 18px; vertical-align: middle; margin-left: 0.25rem; transition: stroke 0.3s ease; }
-.footer-icon-link:hover svg { stroke: var(--primary-blue); }
+/* --- Common Element Styles --- */
 
-
-/* --- RESTORED ABOUT US PAGE STYLES --- */
-.about-page-container .container.about-container { 
-  margin-top: 0; 
-  padding-top: 0; /* Remove padding if hero takes full width */
+button {
+  margin: 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-blue);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.about-hero { 
-  height: 40vh; 
-  background-image: linear-gradient(rgba(28, 146, 210, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop'); 
-  background-size: cover; 
-  background-position: center; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center; 
-  color: white; 
+button:hover {
+  background-color: #1377ad; /* Darker blue on hover */
 }
-.about-hero-content h1 { font-size: 2rem; margin: 0; font-weight: 700; }
-.about-hero-content p { font-size: 1rem; margin-top: 0.5rem; opacity: 0.9; }
-.about-section { padding: 2rem 0; text-align: left; line-height: 1.8; }
-.about-section h2 { text-align: center; font-size: 1.75rem; margin-bottom: 2rem; color: #2c3e50; }
-.activities-section { background-color: #f8f9fa; border-radius: 16px; padding: 2rem; }
-.about-activities-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-.activity-card { padding: 1.5rem; border: 1px solid #e0e0e0; border-radius: 12px; transition: box-shadow 0.3s, transform 0.3s; }
-.activity-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.activity-card h3 { color: #1c92d2; margin-top: 0; }
-.motto-section { text-align: center; }
-.motto-section blockquote { font-size: 1.25rem; font-style: italic; color: #333; border-left: 5px solid var(--primary-blue); padding-left: 1.5rem; margin: 2rem 0; display: inline-block; }
-.motto-section footer { font-size: 1rem; color: #777; margin-top: 0.5rem; }
-.faculty-section { background-color: #e9ecef; border-radius: 16px; padding: 2.5rem 1.5rem; margin-top: 2rem; }
-.faculty-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 2rem; }
-.faculty-card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; }
-.faculty-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
-.faculty-card img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 5px solid var(--primary-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.faculty-card h3 { margin: 0; font-size: 1.5rem; color: #2c3e50; }
-.faculty-card .faculty-designation { color: #6c757d; font-size: 1rem; margin: 0.25rem 0 1rem 0; }
-.faculty-card blockquote { font-style: italic; color: #555; border-left: 3px solid #dee2e6; padding-left: 1rem; margin: 0; text-align: left; }
 
+/* Container for options/buttons */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-/* --- TABLET & DESKTOP STYLES --- */
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  text-align: left; /* Align labels and inputs */
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: -10px; /* Pull input slightly closer */
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box; /* Include padding and border in width */
+  font-size: 1rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(28, 146, 210, 0.2); /* Focus ring */
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--dark-blue);
+  padding: 0.5rem 1rem;
+  color: white;
+  min-height: 65px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem; /* Smaller on mobile */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap; /* Allow links/buttons to wrap */
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
+.navbar-user {
+  color: #ecf0f1; /* Light gray for user name */
+}
+
+.navbar-button {
+  background-color: #e74c3c; /* Red color for logout/action */
+  box-shadow: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem; /* Match link size */
+}
+.navbar-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Specific icon styles */
+.navbar-icon { /* User profile pic */
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar-icon-right { /* Sahyog logo */
+  height: 55px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* User Count Display */
+.user-count-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.count-button {
+  background-color: #3498db; /* Different blue for count button */
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+.count-button:hover {
+  background-color: #2980b9; /* Darker blue */
+}
+
+.user-count-display {
+  color: white;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+/* --- Event Grid Styles --- */
+.events-grid {
+  display: grid;
+  /* Responsive grid columns */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.event-card-grid {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  overflow: hidden; /* Keep image corners rounded */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.event-card-grid:hover {
+  transform: translateY(-8px); /* Lift effect */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.event-image-grid {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Cover the area, may crop */
+}
+
+.event-content-grid {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ensure content fills card height */
+}
+
+.event-content-grid h2 {
+  font-size: 1.2rem;
+  margin-top: 0; /* Remove default margin */
+}
+
+/* Like Button Styles */
+.like-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  margin-top: auto; /* Push to bottom of card content if needed */
+}
+.like-btn svg {
+  stroke: #555; /* Default heart outline color */
+  transition: all 0.2s ease;
+}
+.like-btn.liked svg {
+  fill: #e74c3c; /* Red fill when liked */
+  stroke: #e74c3c; /* Red outline when liked */
+}
+
+/* --- ABOUT US PAGE STYLES --- */
+
+/* Specific container for about page, adjust margin if needed */
+.about-page-container .container.about-container {
+  margin-top: 0;
+}
+
+/* Hero section */
+.about-hero {
+  height: 40vh; /* Adjust height as needed */
+  background-image: linear-gradient(rgba(28, 146, 210, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto-format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+.about-hero-content h1 {
+  font-size: 2rem; /* Mobile first hero title */
+}
+
+/* General section styling */
+.about-section {
+  padding: 2rem 0;
+  text-align: left;
+  line-height: 1.8;
+}
+.about-section h2 {
+  font-size: 1.5rem; /* Mobile section titles */
+}
+
+/* Activities section */
+.activities-section {
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem; /* Add space above */
+}
+
+.about-activities-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column on mobile */
+  gap: 2rem;
+}
+
+.activity-card {
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.activity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.activity-card h3 {
+  color: var(--primary-blue);
+  margin-top: 0;
+}
+
+/* Motto section */
+.motto-section {
+  text-align: center;
+  margin-top: 2rem; /* Add space above */
+}
+.motto-section blockquote {
+  font-size: 1.25rem;
+  font-style: italic; /* Common style for quotes */
+}
+
+/* Faculty section */
+.faculty-section {
+  background-color: #e9ecef; /* Slightly darker background */
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.faculty-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column on mobile */
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.faculty-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.faculty-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.faculty-card img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  border: 5px solid var(--primary-blue);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.faculty-card h3 { /* Name */
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--dark-blue);
+}
+
+.faculty-card .faculty-designation { /* Title/Role */
+  color: #6c757d; /* Gray text */
+  font-size: 1rem;
+  margin: 0.25rem 0 1rem 0;
+}
+
+.faculty-card blockquote { /* Quote */
+  font-style: italic;
+  color: #555;
+  border-left: 3px solid #dee2e6; /* Subtle left border */
+  padding-left: 1rem;
+  margin: 0; /* Remove default blockquote margin */
+  text-align: left;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* Medium screens (tablets, larger phones) */
 @media (min-width: 768px) {
-  main.page-container { padding: 1rem 1.5rem; }
-  .container { margin: 2rem auto; padding: 2.5rem; }
-  .navbar { padding: 0 2rem; flex-wrap: nowrap; }
-  .navbar-brand { font-size: 1.3rem; }
-  .navbar-links { gap: 1.5rem; }
-  .navbar-link { font-size: 1rem; }
-  .about-hero-content h1 { font-size: 3rem; }
-  .about-hero-content p { font-size: 1.25rem; }
-  .about-section h2 { font-size: 2rem; }
-  .about-activities-grid { grid-template-columns: repeat(3, 1fr); }
-  .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+  main.page-container {
+    padding: 1rem 1.5rem; /* Add some side padding */
+  }
+  .container {
+    margin: 2rem auto; /* Center container with auto margins */
+    padding: 2.5rem;
+  }
+
+  /* Navbar adjustments */
+  .navbar {
+    padding: 0 2rem; /* More horizontal padding */
+    flex-wrap: nowrap; /* Prevent wrapping */
+  }
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+  .navbar-links {
+    gap: 1.5rem;
+  }
+  .navbar-link {
+    font-size: 1rem;
+  }
+  .navbar-button {
+      font-size: 1rem; /* Match link size */
+  }
+
+  /* About page hero */
+  .about-hero-content h1 {
+    font-size: 3rem;
+  }
+  .about-hero-content p {
+    font-size: 1.25rem;
+  }
+
+  /* About page sections */
+  .about-section h2 {
+    font-size: 2rem;
+  }
+  .about-activities-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for activities */
+  }
+  .faculty-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for faculty */
+  }
 }
 
-/* --- LARGE DESKTOP STYLES --- */
+/* Large screens (desktops) */
 @media (min-width: 1200px) {
-  .container { max-width: 1200px; }
-  .about-page-container .container.about-container { max-width: 900px; }
+  .container {
+    max-width: 1200px; /* Max width for general content */
+  }
+  /* Specific max width for the about page container if needed */
+  .about-page-container .container.about-container {
+    max-width: 900px;
+  }
+}
+
+/* --- UPDATED FOOTER STYLES --- */
+.footer {
+  background-color: var(--dark-blue);
+  color: #bdc3c7; /* Lighter gray for text */
+  padding: 1rem 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto; /* Pushes footer down if content is short */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap; /* Allow wrapping if needed */
+}
+
+.footer-link { /* Link to your profile/name */
+  color: white; /* Make the name stand out */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.footer-link:hover {
+  color: var(--primary-blue); /* Blue on hover */
+  text-decoration: underline;
+}
+
+/* Style for icon link container */
+.footer-icon-link svg {
+  stroke: #bdc3c7; /* Icon color */
+  width: 18px;
+  height: 18px;
+  vertical-align: middle; /* Align icon nicely with text */
+  margin-left: 0.25rem;
+  transition: stroke 0.3s ease;
+}
+.footer-icon-link:hover svg {
+  stroke: var(--primary-blue); /* Blue icon on hover */
 }
