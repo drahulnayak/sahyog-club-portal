@@ -1,40 +1,60 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext.jsx';
-import { API_BASE_URL } from '../api.js'; // <-- IMPORT API_BASE_URL
+import { API_BASE_URL } from '../api.js'; // Ensure this path is correct
+import { AuthContext } from '../context/AuthContext.jsx'; // Ensure this path is correct
 
 const LoginPage = () => {
+  // State for form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
 
+  // State for loading indicator
+  const [isLoading, setIsLoading] = useState(false);
+  // State for displaying errors
+  const [error, setError] = useState('');
+
+  // Hook for navigation
+  const navigate = useNavigate();
+  // Get login function from authentication context
+  const { login } = useContext(AuthContext);
+
+  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
+    setIsLoading(true); // Start loading
+    setError(''); // Clear previous errors
+
     try {
-      // Use API_BASE_URL for the URL
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, { 
+      // Send login request to the backend
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }), // Send credentials
       });
 
+      // Parse the JSON response from the backend
       const data = await res.json();
+
+      // Check if the request was successful (status code 2xx)
       if (res.ok) {
-        // Pass both token and user object to login function
-        login(data.token, data.user); 
-        navigate('/'); // Redirect to home page on success
+        // --- SUCCESS ---
+        login(data.token, data.user); // Save token and user data using context
+        navigate('/'); // Redirect to the home page
       } else {
-        alert(data.message); // Show error message from backend
+        // --- FAILURE ---
+        // If backend returned an error (e.g., invalid credentials)
+        setError(data.message || 'Login failed. Please check credentials.');
       }
-    } catch (error) {
-      console.error('Login failed:', error);
-      // More specific error for network issues
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        alert('Failed to connect to the server. Please check your connection or try again later.');
+    } catch (err) { // Catch network errors or other issues during fetch
+      console.error('Login fetch error:', err);
+      // Provide user-friendly error messages
+      if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
+        setError('Failed to connect to the server. Please check connection.');
       } else {
-        alert('An error occurred during login.');
+        setError('An unexpected error occurred during login.');
       }
+    } finally {
+      setIsLoading(false); // Stop loading, whether success or error
     }
   };
 
@@ -42,13 +62,37 @@ const LoginPage = () => {
     <div className="container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+        {/* Email Input */}
+        <label htmlFor="login-email">Email:</label>
+        <input
+          id="login-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+          required
+          disabled={isLoading} // Disable input while loading
+        />
 
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
-        
-        <button type="submit">Login</button>
+        {/* Password Input */}
+        <label htmlFor="login-password">Password:</label>
+        <input
+          id="login-password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+          required
+          disabled={isLoading} // Disable input while loading
+        />
+
+        {/* Display error message if login fails */}
+        {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+
+        {/* Submit Button */}
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging In...' : 'Login'}
+        </button>
       </form>
     </div>
   );
