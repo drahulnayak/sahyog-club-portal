@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './pages/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -19,7 +20,12 @@ export default function App() {
       <main className="page-container">
         <Routes>
           {/* All your existing routes */}
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+
           <Route path="/branch/:year" element={<BranchPage />} />
           <Route path="/semester/:year/:branch" element={<SemesterPage />} />
           <Route path="/viewer/:year/:branch/:semester" element={<Viewer />} />

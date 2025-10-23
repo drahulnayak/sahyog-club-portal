@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="navbar-links">
         <Link to="/events" className="navbar-link">Events</Link>
         <Link to="/about" className="navbar-link">About Us</Link>
-        <UserCount />
+        {user ? (<UserCount />) : null}
         {user ? (
           <>
             <span className="navbar-user">Welcome!</span>

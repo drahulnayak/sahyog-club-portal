@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../api.js'; // <-- This is CORRECT
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 const SignupPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +24,8 @@ const SignupPage = () => {
       const data = await res.json();
       if (res.ok) {
         alert(data.message);
-        navigate('/login'); // Redirect to login page on success
+        login(data.token, data.user); // Log the user in after successful signup
+        navigate('/'); // Redirect to home on success
       } else {
         alert(data.message); // Show error message from backend
       }
