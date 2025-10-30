@@ -46,7 +46,7 @@ main.page-container {
   /* Glass effect */
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   backdrop-filter: blur(12px) saturate(120%);
-  background: rgba(255, 255, 255, 0.20);
+  background: rgba(241, 239, 239, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);

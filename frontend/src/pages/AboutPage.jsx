@@ -1,9 +1,16 @@
 import React from 'react';
-import facultyPhoto1 from '../assets/zs_profile_pic.jpg'; // Make sure this image is in src/assets
+
+// --- IMPORT YOUR IMAGES ---
+// Make sure these images are in your frontend/src/assets/ folder
+import facultyPhoto1 from '../assets/Screenshot 2025-10-30 222622.png';
+import facultyPhoto2 from '../assets/Screenshot 2025-10-30 222715.png';
 
 const AboutPage = () => {
   return (
+    // This wrapper is used to contain the hero and the main content
     <div className="about-page-container">
+      
+      {/* === Hero Section === */}
       <header className="about-hero">
         <div className="about-hero-content">
           <h1>Our Story: The Heart of Mentorship</h1>
@@ -11,7 +18,10 @@ const AboutPage = () => {
         </div>
       </header>
 
+      {/* === Main Content Area (uses the glassmorphism container) === */}
       <main className="container about-container">
+        
+        {/* --- Introduction Section --- */}
         <section className="about-section">
           <h2>Forged in Friendship, Founded on Vision</h2>
           <p>
@@ -19,22 +29,36 @@ const AboutPage = () => {
           </p>
         </section>
 
-        {/* --- FACULTY IN-CHARGE SECTION --- */}
+        {/* --- Faculty In-Charge Section --- */}
         <section className="about-section faculty-section">
           <h2>Our Guiding Pillars</h2>
           <div className="faculty-grid">
+            
+            {/* === Card 1: Corrected with Link === */}
             <div className="faculty-card">
-              <img src={facultyPhoto1} alt="Faculty In-charge 1" />
-              <h3>[Faculty Name 1]</h3>
-              <p className="faculty-designation">[Designation, Department]</p>
+              <img src={facultyPhoto1} alt="Dr. A.K. Das" /> {/* Uses imported image */}
+              <h3>
+                {/* Name is now a clickable link */}
+                <a href="https://nitrr.ac.in/viewdetails.php?q=min.akdash" target="_blank" rel="noopener noreferrer" className="faculty-link">
+                  Dr. A.K. Das
+                </a>
+              </h3>
+              <p className="faculty-designation">Assistant Professor, Mining Department</p>
               <blockquote>
                 "Sahyog represents the spirit of collaborative growth that we cherish at our institution. It's inspiring to see students uplift one another."
               </blockquote>
             </div>
+
+            {/* === Card 2: Corrected with Link === */}
             <div className="faculty-card">
-              <img src="https://placehold.co/180x180/1c92d2/FFFFFF?text=Photo" alt="Faculty In-charge 2" />
-              <h3>[Faculty Name 2]</h3>
-              <p className="faculty-designation">[Designation, Department]</p>
+              <img src={facultyPhoto2} alt="Dr. Madhukrishna Priyadarsini" /> {/* Uses imported image */}
+              <h3>
+                {/* Name is now a clickable link */}
+                <a href="https://nitrr.ac.in/viewdetails.php?q=cse.mpriyadarsini" target="_blank" rel="noopener noreferrer" className="faculty-link">
+                  Dr. Madhukrishna Priyadarsini
+                </a>
+              </h3>
+              <p className="faculty-designation">Assistant Professor, Computer Science & Engineering</p>
               <blockquote>
                 "Mentorship is key to unlocking a student's full potential. Sahyog provides the perfect platform for this transformative journey."
               </blockquote>
@@ -42,6 +66,7 @@ const AboutPage = () => {
           </div>
         </section>
 
+        {/* --- Activities Section --- */}
         <section className="about-section activities-section">
           <h2>Empowering Every Step of the Journey</h2>
           <div className="about-activities-grid">
@@ -60,6 +85,7 @@ const AboutPage = () => {
           </div>
         </section>
 
+        {/* --- Motto Section --- */}
         <section className="about-section motto-section">
           <blockquote>
             “Together we grow, together we succeed.”
