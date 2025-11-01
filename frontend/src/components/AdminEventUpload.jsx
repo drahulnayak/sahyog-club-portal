@@ -1,6 +1,7 @@
 // frontend/src/components/AdminEventUpload.jsx
 
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../api.js';
 
 const AdminEventUpload = ({ adminPassword }) => {
   const [title, setTitle] = useState('');
@@ -23,7 +24,7 @@ const AdminEventUpload = ({ adminPassword }) => {
     formData.append('eventImage', imageFile); // This name MUST match upload.single('eventImage')
 
     try {
-      const res = await fetch('http://localhost:4000/api/events/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/events/upload`, {
         method: 'POST',
         headers: {
           // The browser sets 'Content-Type' for FormData automatically.

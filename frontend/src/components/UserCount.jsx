@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../api.js';
 
 const UserCount = () => {
   const [count, setCount] = useState(0);
@@ -8,7 +9,7 @@ const UserCount = () => {
   const fetchUserCount = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/api/users/count');
+      const res = await fetch(`${API_BASE_URL}/api/users/count`);
       const data = await res.json();
       setCount(data.count);
     } catch (error) {

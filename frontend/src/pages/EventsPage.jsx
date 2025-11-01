@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
+import { API_BASE_URL, fetchEvents as fetchEventsApi } from '../api.js';
 
 // --- Reusable EventCard Component ---
 const EventCard = ({ event, user, token }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [likes, setLikes] = useState(event.likes);
+  const [likes, setLikes] = useState(event.likes || []);
 
-  const isLikedByCurrentUser = user && likes.includes(user.id);
+  // robust check for current user's id (token payload stores user.id)
+  const currentUserId = user?.id || user?._id || null;
+  const isLikedByCurrentUser = !!currentUserId && likes.some(like => String(like) === String(currentUserId));
   
   const handleLike = async () => {
     if (!user) {
@@ -14,7 +17,7 @@ const EventCard = ({ event, user, token }) => {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:4000/api/events/like/${event._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/like/${event._id}`, {
         method: 'PUT',
         headers: {
           'x-auth-token': token,
@@ -29,7 +32,7 @@ const EventCard = ({ event, user, token }) => {
     }
   };
 
-  const fullImageUrl = `http://localhost:4000/${event.imageUrl}`;
+  const fullImageUrl = `${API_BASE_URL}/${event.imageUrl}`;
   const shortDescription = event.description.length > 100 
     ? event.description.substring(0, 100) + '...'
     : event.description;
@@ -67,17 +70,16 @@ const EventsPage = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const load = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/events');
-        const data = await res.json();
+        const data = await fetchEventsApi();
         setEvents(data);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       }
       setIsLoading(false);
     };
-    fetchEvents();
+    load();
   }, []);
 
   if (isLoading) {

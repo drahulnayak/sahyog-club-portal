@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -11,19 +11,19 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        // Check if the token is expired
+        // Decode token and validate expiry
         const decodedToken = jwtDecode(token);
         if (decodedToken.exp * 1000 < Date.now()) {
-          // Token is expired, remove it
+          // Token expired
           localStorage.removeItem('token');
           setIsUser(0);
         } else {
-          // Token is valid, set the user
-          setUser(decodedToken);
+          // Token valid — use the `user` payload if present (backend puts user under `user`)
+          setUser(decodedToken.user || decodedToken);
           setIsUser(1);
         }
       } catch (error) {
-        // If token is invalid for any reason, remove it
+        // Invalid token
         localStorage.removeItem('token');
         setIsUser(0);
       }
@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = (token) => {
     localStorage.setItem('token', token);
-    const decodedUser = jwtDecode(token);
-    setUser(decodedUser);
+    const decoded = jwtDecode(token);
+    setUser(decoded.user || decoded);
     setIsUser(1);
   };
 
