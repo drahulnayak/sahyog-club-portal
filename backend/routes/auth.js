@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Ensure this path points correctly to your User model
+const User = require('../models/user'); // Ensure this path points correctly to your User model
 
 // --- Configuration Check ---
 // It's crucial that JWT_SECRET is defined in your environment variables (e.g., on Render)

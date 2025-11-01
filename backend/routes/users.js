@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+// --- THIS IS THE FIX ---
+// Import must match the file name exactly: 'user.js' (lowercase)
+const User = require('../models/user');
+// --- END FIX ---
 
 // @route   GET /api/users/count
 // @desc    Get the total number of registered users
