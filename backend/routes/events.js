@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const Event = require('../models/Event');
+// --- THIS IS THE FIX ---
+const Event = require('../models/event'); // Use lowercase 'event' to match your file name
+// --- END FIX ---
 const adminAuth = require('../middleware/auth');
-const jwtAuth = require('../middleware/jwtAuth'); // <-- IMPORT the new middleware
+const jwtAuth = require('../middleware/jwtAuth');
 
 // --- Multer Storage Configuration ---
 const storage = multer.diskStorage({
@@ -25,6 +27,7 @@ router.get('/', async (req, res) => {
     const events = await Event.find().sort({ createdAt: -1 });
     res.json(events);
   } catch (error) {
+    console.error('Error fetching events:', error.message); // Add better logging
     res.status(500).send('Server Error');
   }
 });
@@ -46,7 +49,7 @@ router.post('/upload', adminAuth, upload.single('eventImage'), async (req, res) 
   }
 });
 
-// PUT /api/events/like/:id - Like or unlike an event (NEW ROUTE)
+// PUT /api/events/like/:id - Like or unlike an event
 router.put('/like/:id', jwtAuth, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
