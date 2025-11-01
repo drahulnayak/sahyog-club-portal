@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 // --- THIS IS THE FIX ---
-const Event = require('../models/event'); // Use lowercase 'event' to match your file name
+const Event = require('../models/Event'); // Use lowercase 'event' to match your file name
 // --- END FIX ---
 const adminAuth = require('../middleware/auth');
 const jwtAuth = require('../middleware/jwtAuth');
