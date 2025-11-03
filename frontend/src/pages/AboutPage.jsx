@@ -36,11 +36,11 @@ const AboutPage = () => {
             
             {/* === Card 1: Corrected with Link === */}
             <div className="faculty-card">
-              <img src={facultyPhoto1} alt="Dr. A.K. Das" /> {/* Uses imported image */}
+              <img src={facultyPhoto1} alt="Dr. A.K. Dash" /> {/* Uses imported image */}
               <h3>
                 {/* Name is now a clickable link */}
                 <a href="https://nitrr.ac.in/viewdetails.php?q=min.akdash" target="_blank" rel="noopener noreferrer" className="faculty-link">
-                  Dr. A.K. Das
+                  Dr. A.K. Dash
                 </a>
               </h3>
               <p className="faculty-designation">Assistant Professor, Mining Department</p>
