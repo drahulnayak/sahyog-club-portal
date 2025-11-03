@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
+// --- THIS IS THE FIX ---
+// 1. Import the model with the correct case (assuming 'Link.js')
 const Link = require('../models/Link');
-const adminAuth = require('../middleware/auth');
+// 2. Destructure the import to get the function, not the object
+const { adminAuth } = require('../middleware/auth');
+// --- END FIX ---
 
 router.get('/', async (req, res) => {
   try {
@@ -18,6 +23,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// This route will now work because 'adminAuth' is a function
 router.post('/upload', adminAuth, async (req, res) => {
   try {
     const { title, branch, year, semester, url } = req.body;
