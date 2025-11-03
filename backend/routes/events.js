@@ -2,11 +2,13 @@ const multer = require('multer');
 const path = require('path');
 const router = require('express').Router();
 
-// Import Event model
+// Import Event model (matches 'Event.js' file name)
 const Event = require('../models/Event');
 
-const adminAuth = require('../middleware/auth');
-const jwtAuth = require('../middleware/jwtAuth');
+// --- THIS IS THE FIX ---
+// Import both functions from the *same* middleware file
+const { adminAuth, jwtAuth } = require('../middleware/auth');
+// --- END FIX ---
 
 // --- Multer Storage Configuration ---
 const storage = multer.diskStorage({
@@ -33,6 +35,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST /api/events/upload - Admin uploads a new event
+// This route now correctly uses the imported 'adminAuth'
 router.post('/upload', adminAuth, upload.single('eventImage'), async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -50,6 +53,7 @@ router.post('/upload', adminAuth, upload.single('eventImage'), async (req, res) 
 });
 
 // PUT /api/events/like/:id - Like or unlike an event
+// This route now correctly uses the imported 'jwtAuth'
 router.put('/like/:id', jwtAuth, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);

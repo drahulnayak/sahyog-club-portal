@@ -1,24 +1,41 @@
-// This middleware checks for the simple admin password
-// from the 'x-admin-password' header.
+const jwt = require('jsonwebtoken');
 
+// --- Middleware 1: Admin Password Check ---
+// This checks for the 'x-admin-password' header
 const adminAuth = (req, res, next) => {
-  // 1. Get the password from the request header
   const password = req.header('x-admin-password');
 
-  // 2. Check if the header was sent
   if (!password) {
     return res.status(401).json({ message: 'Access Denied: No admin password provided.' });
   }
 
-  // 3. Check if the password is correct
-  //    It compares against the 'ADMIN_PASSWORD' you set on Render
   if (password === process.env.ADMIN_PASSWORD) {
-    // 4. Password is correct! Proceed to the upload.
-    next();
+    next(); // Password is correct, proceed
   } else {
-    // 5. Password is wrong.
     return res.status(403).json({ message: 'Access Denied: Invalid admin password.' });
   }
 };
 
-module.exports = adminAuth;
+// --- Middleware 2: User Login (JWT) Check ---
+// This checks for the 'x-auth-token' header for liking posts
+const jwtAuth = (req, res, next) => {
+  const token = req.header('x-auth-token');
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ message: 'Token is not valid' });
+  }
+};
+
+// --- Export BOTH functions ---
+module.exports = {
+  adminAuth,
+  jwtAuth
+};
