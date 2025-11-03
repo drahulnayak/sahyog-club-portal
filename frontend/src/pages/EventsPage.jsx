@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
-// --- FIX: We no longer need API_BASE_URL for images ---
-import { fetchEvents, likeEvent } from '../api.js';
+
+// --- THIS IS THE FIX ---
+// 1. Import your custom 'useAuth' hook
+import { useAuth } from '../context/AuthContext.jsx'; 
+// 2. Import all the API functions you need
+import { fetchEvents, likeEvent, API_BASE_URL } from '../api.js'; 
+// --- END FIX ---
 
 // --- Heart SVG Icon Component ---
 const HeartIcon = () => (
@@ -25,25 +29,24 @@ const HeartIcon = () => (
 const EventCard = ({ event, user, onLike }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Check if the current user has liked this event
   const currentUserId = user?.id || user?._id || null;
   const isLikedByCurrentUser = !!currentUserId && event.likes.some(like => String(like) === String(currentUserId));
 
-  // --- THIS IS THE FIX ---
   // The imageUrl from the database is now a full https:// link from Cloudinary
-  // We don't need to add API_BASE_URL anymore.
   const fullImageUrl = event.imageUrl;
 
   const shortDescription = event.description.length > 100
     ? event.description.substring(0, 100) + '...'
     : event.description;
 
+  // Call the handleLike function that was passed down from the parent
   const handleLikeClick = () => {
     onLike(event._id);
   };
 
   return (
     <div className="event-card-grid">
-      {/* --- 3. USE THE CORRECT URL HERE --- */}
       <img
         src={fullImageUrl}
         alt={event.title}
@@ -78,13 +81,17 @@ const EventsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
+  // --- THIS IS THE FIX ---
+  // Get everything you need directly from your useAuth hook
   const { user, token, isLoggedIn } = useAuth();
+  // --- END FIX ---
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     const load = async () => {
       try {
-        const data = await fetchEvents();
+        const data = await fetchEvents(); // Use the function from api.js
         setEvents(data);
       } catch (error) {
         console.error('Failed to fetch events:', error);
@@ -93,7 +100,7 @@ const EventsPage = () => {
       setIsLoading(false);
     };
     load();
-  }, []); 
+  }, []); // Runs once on page load
 
   const handleLike = async (eventId) => {
     if (!isLoggedIn) {
@@ -102,8 +109,16 @@ const EventsPage = () => {
       return;
     }
     
+    // The 'token' variable is now correctly provided by useAuth()
+    if (!token) {
+      alert('Authentication token is missing. Please log in again.');
+      return;
+    }
+
     try {
       const updatedLikesArray = await likeEvent(eventId, token);
+      
+      // Update the main events state
       setEvents(currentEvents =>
         currentEvents.map(event =>
           event._id === eventId
@@ -136,7 +151,7 @@ const EventsPage = () => {
             <EventCard
               key={event._id}
               event={event}
-              user={user}
+              user={user} // Pass the user from useAuth
               onLike={handleLike}
             />
           ))

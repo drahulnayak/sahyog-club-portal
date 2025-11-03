@@ -188,6 +188,7 @@ export async function fetchUserCount() {
  * Requires the user's auth token.
  */
 export async function likeEvent(eventId, token) {
+  console.log("token in likeEvent api:", token);
   const res = await fetch(`${API_BASE_URL}/api/events/like/${eventId}`, {
     method: 'PUT',
     headers: {

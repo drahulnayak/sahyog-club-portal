@@ -19,15 +19,20 @@ const adminAuth = (req, res, next) => {
 // --- Middleware 2: User Login (JWT) Check ---
 // This checks for the 'x-auth-token' header for liking posts
 const jwtAuth = (req, res, next) => {
+
+  console.log("HII from jwtAuth middleware");
   const token = req.header('x-auth-token');
 
   if (!token) {
+    console.log("No token found in request headers");
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
 
   try {
+    console.log("Verifying token:", token);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded.user;
+    console.log(req.user);
     next();
   } catch (err) {
     res.status(401).json({ message: 'Token is not valid' });
