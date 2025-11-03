@@ -105,11 +105,10 @@
 // export default EventsPage;
 
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// --- FIX: Use the useAuth hook and import all API functions ---
-import { useAuth } from '../context/AuthContext.jsx';
-import { API_BASE_URL, fetchEvents as fetchEventsApi, likeEvent } from '../api.js';
+import { useAuth } from '../context/AuthContext.jsx'; // Import useAuth
+import { fetchEvents, likeEvent, API_BASE_URL } from '../api.js'; // Import ALL API functions
 
 // --- Heart SVG Icon Component ---
 const HeartIcon = () => (
@@ -129,7 +128,6 @@ const HeartIcon = () => (
 
 
 // --- Reusable EventCard Component ---
-// This component is now "dumb" - it just displays data given to it.
 const EventCard = ({ event, user, onLike }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -137,7 +135,7 @@ const EventCard = ({ event, user, onLike }) => {
   const currentUserId = user?.id || user?._id || null;
   const isLikedByCurrentUser = !!currentUserId && event.likes.some(like => String(like) === String(currentUserId));
 
-  // --- FIX: Build the full, absolute URL for the image ---
+  // Build the full, absolute URL for the image
   const fullImageUrl = `${API_BASE_URL}/${event.imageUrl}`;
 
   const shortDescription = event.description.length > 100
@@ -155,7 +153,6 @@ const EventCard = ({ event, user, onLike }) => {
         src={fullImageUrl}
         alt={event.title}
         className="event-image-grid"
-        // Add a fallback image in case the URL is broken
         onError={(e) => { e.target.src = 'https://placehold.co/600x400/2c3e50/f8f9fa?text=Image+Missing'; }}
       />
       <div className="event-content-grid">
@@ -180,13 +177,11 @@ const EventCard = ({ event, user, onLike }) => {
 
 
 // --- Main EventsPage Component ---
-// This component is "smart" - it fetches data and manages state.
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // --- FIX: Get user, token, and login status from useAuth hook ---
   const { user, token, isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
@@ -194,18 +189,18 @@ const EventsPage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const data = await fetchEventsApi(); // Use the function from api.js
+        const data = await fetchEvents(); // Use the function from api.js
         setEvents(data);
       } catch (error) {
         console.error('Failed to fetch events:', error);
-        setError(error.message); // Set error state to display to user
+        setError(error.message); 
       }
       setIsLoading(false);
     };
     load();
-  }, []); // Empty array ensures this runs only once
+  }, []); 
 
-  // --- FIX: Like handler now lives in the parent component ---
+  // Like handler lives in the parent component
   const handleLike = async (eventId) => {
     if (!isLoggedIn) {
       alert('You must be logged in to like a post.');
@@ -214,14 +209,14 @@ const EventsPage = () => {
     }
     
     try {
-      // 1. Call the API using the function from api.js
+      // 1. Call the API
       const updatedLikesArray = await likeEvent(eventId, token);
       
-      // 2. Update the *main* events state
+      // 2. Update the main events state
       setEvents(currentEvents =>
         currentEvents.map(event =>
           event._id === eventId
-            ? { ...event, likes: updatedLikesArray } // Update just the one event
+            ? { ...event, likes: updatedLikesArray } 
             : event
         )
       );
@@ -240,7 +235,6 @@ const EventsPage = () => {
   }
 
   return (
-    // Use the container class, but also events-grid-container for width overrides
     <div className="container events-grid-container">
       <h1>SAHYOG - Club Events</h1>
       <div className="events-grid">
@@ -252,7 +246,6 @@ const EventsPage = () => {
               key={event._id}
               event={event}
               user={user}
-              token={token} // Pass token and user down
               onLike={handleLike} // Pass the handler function down
             />
           ))
