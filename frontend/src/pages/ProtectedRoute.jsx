@@ -1,11 +1,13 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // adjust path as needed
+// Use a relative path from 'pages' up to 'src' and down to 'context'
+import { useAuth } from '../context/AuthContext.jsx'; 
 
 const ProtectedRoute = ({ redirectPath = '/login' }) => {
-  const { isUser } = useAuth();
+  // Use the new 'isLoggedIn' boolean, not 'isUser'
+  const { isLoggedIn } = useAuth();
 
-  return isUser ? <Outlet /> : <Navigate to={redirectPath} replace />;
+  return isLoggedIn ? <Outlet /> : <Navigate to={redirectPath} replace />;
 };
 
 export default ProtectedRoute;

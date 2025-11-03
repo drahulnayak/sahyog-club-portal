@@ -4,10 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { AuthProvider } from './context/AuthContext.jsx';
 import './styles.css'; 
-createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+
+const root = createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
+    {/* --- THIS IS THE CORRECTION --- */}
+    {/* AuthProvider MUST wrap BrowserRouter */}
     <AuthProvider>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </AuthProvider>
-  </BrowserRouter>
+    {/* --- END CORRECTION --- */}
+  </React.StrictMode>
 );

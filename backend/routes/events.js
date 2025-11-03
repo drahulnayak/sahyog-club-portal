@@ -1,12 +1,9 @@
-const express = require('express');
-const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const router = require('express').Router();
 
-// --- THIS IS THE FIX ---
-// Import must match the file name exactly: 'event.js' (lowercase)
-const Event = require('../models/event');
-// --- END FIX ---
+// Import Event model
+const Event = require('../models/Event');
 
 const adminAuth = require('../middleware/auth');
 const jwtAuth = require('../middleware/jwtAuth');

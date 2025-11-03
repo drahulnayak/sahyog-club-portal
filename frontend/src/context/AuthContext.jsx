@@ -1,53 +1,58 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import jwtDecode from 'jwt-decode';
+
+// --- THIS IS THE FIX ---
+// Use a named import { jwtDecode } instead of a default import
+import { jwtDecode } from 'jwt-decode';
+// --- END FIX ---
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isUser, setIsUser] = useState(0);
 
+  // This hook runs once when the app loads
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        // Decode token and validate expiry
         const decodedToken = jwtDecode(token);
+
         if (decodedToken.exp * 1000 < Date.now()) {
-          // Token expired
+          // Token is expired
           localStorage.removeItem('token');
-          setIsUser(0);
+          setUser(null); // Ensure user state is cleared
         } else {
-          // Token valid — use the `user` payload if present (backend puts user under `user`)
+          // Token is valid, set the user
           setUser(decodedToken.user || decodedToken);
-          setIsUser(1);
         }
       } catch (error) {
-        // Invalid token
+        // Token is invalid/malformed
         localStorage.removeItem('token');
-        setIsUser(0);
+        setUser(null); // Ensure user state is cleared
       }
     }
-  }, []);
+  }, []); // Empty array means this runs only on mount
 
-  const login = (token) => {
+  // The login function now accepts BOTH the token and the user data
+  const login = (token, userData) => {
     localStorage.setItem('token', token);
-    const decoded = jwtDecode(token);
-    setUser(decoded.user || decoded);
-    setIsUser(1);
+    setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    setIsUser(0);
   };
 
+  // Create a boolean 'isLoggedIn' based on whether 'user' exists.
+  const isLoggedIn = !!user;
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isUser }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// This hook is a convenient way to access the context
 export const useAuth = () => useContext(AuthContext);

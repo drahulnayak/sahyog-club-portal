@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const jwtAuth = require('../middleware/jwtAuth'); // Middleware to check login token
-const User = require('../models/user');
+const User = require('../models/User');
 
 // Configure multer storage for profile pictures
 const storage = multer.diskStorage({
