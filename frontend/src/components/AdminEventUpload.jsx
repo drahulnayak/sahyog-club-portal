@@ -1,5 +1,5 @@
 // frontend/src/components/AdminEventUpload.jsx
-
+// Component for admin to upload new event with image and description
 import React, { useState } from 'react';
 import { API_BASE_URL } from '../api.js';
 

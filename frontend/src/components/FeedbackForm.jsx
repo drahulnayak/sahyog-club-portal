@@ -34,7 +34,7 @@ export default function FeedbackForm() {
         <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your Email" />
 
         <label>Message:</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Your Query / Feedback" />
+        <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Submit your queries regarding academics, mental health, or any other issues here. " />
 
         <button type="submit">Submit</button>
       </form>

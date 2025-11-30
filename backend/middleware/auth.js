@@ -18,6 +18,7 @@ const adminAuth = (req, res, next) => {
 
 // --- Middleware 2: User Login (JWT) Check ---
 // This checks for the 'x-auth-token' header for liking posts
+// the next code is meant to be used as middleware in express routes
 const jwtAuth = (req, res, next) => {
 
   console.log("HII from jwtAuth middleware");

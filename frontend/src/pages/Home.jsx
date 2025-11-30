@@ -16,7 +16,7 @@ const Home = () => {
         Welcome to the SAHYOG Portal
       </h1>
       <p style={{ fontSize: '1.25rem', color: '#ffffffff', marginTop: 0, maxWidth: '600px', margin: 'auto' }}>
-        Your Central hub for academic resources, including Previous Year Questions, Notes, and Essential books.
+        Your Central hub for academic resources, including Previous Year Questions, Notes, and Essential books and Student Feedback Form
       </p>
       <h2 style={{ marginTop: '3rem', fontWeight: '600' }}>Select Your Academic Year</h2>
       <div className="options">
